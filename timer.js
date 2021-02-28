@@ -45,14 +45,16 @@ if (!memoryDate.length) {
 
 
 function tickTime() {
-    let dat = Date.now() - memoryDate.getItem('memory')
+    let dat
+    (!memoryDate.getItem('memory') == '') ? dat = Date.now() : dat = memoryDate.getItem('memory')
+    (!memoryDate.getItem('memory') == '') ? memoryDate.setItem('memory', dat) : memoryDate.getItem('memory')
     startTimer = setInterval(() => {
-        memoryDate.setItem('memory', Date.now() - dat)
+        let nowDate = Date.now() - memoryDate.getItem('memory')
         let ti = new Date
-        ti.setMilliseconds(parseInt(((memoryDate.getItem('memory')) % 1000)))
-        ti.setSeconds(parseInt(((memoryDate.getItem('memory')) / 1000) % 60))
-        ti.setMinutes(parseInt(((memoryDate.getItem('memory')) / (1000 * 60)) % 60))
-        ti.setHours(parseInt(((memoryDate.getItem('memory')) / (1000 * 60 * 60)) % 24))
+        ti.setMilliseconds(parseInt(((nowDate) % 1000)))
+        ti.setSeconds(parseInt(((nowDate) / 1000) % 60))
+        ti.setMinutes(parseInt(((nowDate) / (1000 * 60)) % 60))
+        ti.setHours(parseInt(((nowDate) / (1000 * 60 * 60)) % 24))
         let ho = (ti.getHours() < 10) ? ('0' + ti.getHours() + ':') : ti.getHours() + ':'
         let mi = (ti.getMinutes() < 10) ? ('0' + ti.getMinutes() + ':') : ti.getMinutes() + ':'
         let sec = (ti.getSeconds() < 10) ? ('0' + ti.getSeconds() + ':') : ti.getSeconds() + ':'
