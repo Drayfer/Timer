@@ -1,3 +1,5 @@
+let liSave = []
+////////
 
 let memoryDate = localStorage
 let startTimer = 0
@@ -21,7 +23,24 @@ if (!memoryDate.length) {
 } else {
     tickTime()
     document.querySelector('.start').setAttribute('value', 'Пауза')
-    buttonStop.hidden = false
+    buttonStop.hidden = false;
+
+    (!memoryDate.getItem('liSave') == '') ? liSave = memoryDate.getItem('liSave').split(',') : liSave = []
+
+    /////// вызов из памяти списка результатов и публикация при перезагрузке страницы
+    // let liString
+    // (!memoryDate.getItem('liSave') == '') ? liString = memoryDate.getItem('liSave') : liString = 0
+    // console.log(liString)
+    // liSave = liString.split(',')
+    liSave.forEach(element => {
+        let result = document.createElement('li')
+        result.innerHTML = element
+        document.querySelector('.listresults').append(result)
+    })
+    //
+   //(!memoryDate.getItem('liSave') == '') ? (liSave = memoryDate.getItem('liSave').split(',')) : liSave = 0
+    console.log(liSave)
+           /////
 }
 
 
@@ -68,12 +87,15 @@ function clockStartTimer() {
 function clockStopTimer() {
     if( buttonStop.value == 'Сохранить') {
         let result = document.createElement('li')
-        result.addEventListener("dblclick", function( event ) {
-            event.target.remove()
-        }, false);
-
         result.innerHTML = hours.innerHTML + minutes.innerHTML + seconds.innerHTML + miliseconds.innerHTML
         document.querySelector('.listresults').append(result)
+        ///////// добавление в память списка результатов
+        liSave.push(result.innerHTML)
+        console.log(liSave)
+        memoryDate.setItem('liSave', liSave)
+        ///////
+
+
     } else {
         hours.innerHTML = '00:'
         minutes.innerHTML = '00:'
@@ -83,7 +105,9 @@ function clockStopTimer() {
         buttonStop.value = 'Сохранить'
         buttonStop.hidden = true
         document.querySelector('.listresults').innerHTML = ''
-        memoryDate.clear()
+        memoryDate.setItem('memory', 0)
+        memoryDate.setItem('liSave', '')
+        liSave = []
     }
 }
 // Наведение мыши на список результатов
@@ -93,7 +117,11 @@ function clockStopTimer() {
     document.querySelector('ol').addEventListener('mouseout', function (event) {
         event.target.style.color = ''
     })
-
+    document.querySelector('ol').addEventListener("dblclick", function( event ) {
+    event.target.remove()
+    liSave.splice(liSave.indexOf(event.target.innerHTML), 1)
+    memoryDate.setItem('liSave', liSave)
+    }, false);
 
 
 
