@@ -91,7 +91,7 @@ function clockStopTimer() {
         document.querySelector('.listresults').append(result)
         ///////// добавление в память списка результатов
         liSave.push(result.innerHTML)
-        console.log(liSave)
+        // console.log(liSave)
         memoryDate.setItem('liSave', liSave)
         ///////
 
