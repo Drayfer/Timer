@@ -39,7 +39,7 @@ if (!memoryDate.length) {
     })
     //
     //(!memoryDate.getItem('liSave') == '') ? (liSave = memoryDate.getItem('liSave').split(',')) : liSave = 0
-    console.log(liSave)
+   // console.log(liSave)
     /////
 }
 
